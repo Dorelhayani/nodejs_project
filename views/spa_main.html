@@ -7,10 +7,10 @@
 <body>
 
 <div id="add_form">
-    <input type="text" name="name" placeholder="name">
-    <input type="text" name="phone" placeholder="phone">
-    <input type="text" name="pobox" placeholder="pobox">
-    <button> Send </button>
+    <input type="text" id="name" placeholder="name">
+    <input type="text" id="phone" placeholder="phone">
+    <input type="text" id="pobox" placeholder="pobox">
+    <button onclick= "add_new_line()"> Send </button>
 </div>
 <table>
     <thead>
@@ -20,7 +20,7 @@
         <th>Pobox</th>
     </tr>
     </thead>
-    <tbody id="mainTable"> </tbody>
+
 </table>
 
 <script src="table_create.js"></script>

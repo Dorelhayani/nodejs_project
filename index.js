@@ -8,6 +8,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 
 let AllData = [] ;
+// list - מציג את כל הנתונים שיש בשרת
 app.get("/List",(req, res) => {
     res.send(AllData).json();
 });
@@ -48,25 +49,10 @@ app.listen(port, () => {            //server starts listening for any attempts f
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // פנייה אל התיקיה והצגת הטקסט
-app.post("/add3",(req, res) => {
-    res.sendFile("./views/spa_main.html", {root:__dirname});
-});
+// app.post("/add3",(req, res) => {
+//     res.sendFile("./views/spa_main.html", {root:__dirname});
+// });
 //
 
 
