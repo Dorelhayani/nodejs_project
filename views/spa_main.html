@@ -5,17 +5,24 @@
     <title>my SPA</title>
 </head>
 <body>
-<form action="/Add" method="post">
+
+<div id="add_form">
+    <input type="text" name="name" placeholder="name">
+    <input type="text" name="phone" placeholder="phone">
+    <input type="text" name="pobox" placeholder="pobox">
+    <button> Send </button>
+</div>
 <table>
     <thead>
     <tr>
-        <th>NAME</th>
-        <th>PHONE</th>
-        <th>MAILBOX</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Pobox</th>
     </tr>
     </thead>
-    <tbody id="mainTable">  </tbody>
+    <tbody id="mainTable"> </tbody>
 </table>
 
+<script src="table_create.js"></script>
 </body>
 </html>

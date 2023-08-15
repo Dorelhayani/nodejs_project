@@ -18,7 +18,7 @@ app.post("/Add",(req, res) => {
     let line={};
     line.name = req.body.name;
     line.phone = req.body.phone;
-    line.MAILBOX = req.body.MAILBOX;
+    line.pobox = req.body.pobox;
     AllData.push(line);
     res.send(AllData).json();
     res.send("Ready to Add EndPoint");
@@ -29,12 +29,12 @@ app.post("/Add2",(req, res) => {
     let line={};
     line.name = req.body.name;
     line.phone = req.body.phone;
-    line.MAILBOX = req.body.MAILBOX;
+    line.pobox = req.body.pobox;
     AllData.push(line);
     line={};
     line.name = req.body.name_2;
     line.phone = req.body.phone_2;
-    line.MAILBOX = req.body.MAILBOX;
+    line.pobox = req.body.pobox;
     AllData.push(line);
     // res.send(AllData).json();
     res.send("Ready to Add EndPoint");
