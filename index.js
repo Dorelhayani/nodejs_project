@@ -1,5 +1,5 @@
 const express = require('express'); // אומר לקומפיילר תביא לי אקספרס
-const port = 5252;
+const port = 5577;
 const app = express(); // משתמש באקספרס
 app.use(express.json());
 
@@ -8,6 +8,19 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 
 let AllData = [] ;
+
+app.get("/",(req, res) => {
+    res.sendFile("./views/spa_main.html", {root: __dirname});
+});
+
+
+// מחיקת שורה מהטבלה
+app.post("/Delete", (req, res) => {
+    let id = req.body.id;
+    AllData.splice(Number(id),1);
+    res.send("Ready To Delete");
+});
+
 // list - מציג את כל הנתונים שיש בשרת
 app.get("/List",(req, res) => {
     res.send(AllData).json();
@@ -19,9 +32,9 @@ app.post("/Add",(req, res) => {
     let line={};
     line.name = req.body.name;
     line.phone = req.body.phone;
-    line.pobox = req.body.pobox;
+    line.pob = req.body.pob;
     AllData.push(line);
-    res.send(AllData).json();
+    // res.send(AllData).json();
     res.send("Ready to Add EndPoint");
 });
 
@@ -30,12 +43,12 @@ app.post("/Add2",(req, res) => {
     let line={};
     line.name = req.body.name;
     line.phone = req.body.phone;
-    line.pobox = req.body.pobox;
+    line.pob = req.body.pob;
     AllData.push(line);
     line={};
     line.name = req.body.name_2;
     line.phone = req.body.phone_2;
-    line.pobox = req.body.pobox;
+    line.pob = req.body.pob;
     AllData.push(line);
     // res.send(AllData).json();
     res.send("Ready to Add EndPoint");

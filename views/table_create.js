@@ -5,8 +5,9 @@ async function add_new_line() {
     let pobox = document.getElementById("pobox").value;
 
     let response  = await fetch('/Add', {
-        method: 'POST',
-    body: JSON.stringify({"name": name, "phone": phone, "pobox": pobox})
+        method: 'POST', // שיטת שליחה
+        headers: {'Content-Type': 'application/json'}, // שדה שאומר באיזה פורמט המידע יצא
+    body: JSON.stringify({name: name, phone: phone, pobox: pobox}) // המרת הנתונים מג'ייסון למחרוזת
     });
     let data = await response.json();
     console.log(data);

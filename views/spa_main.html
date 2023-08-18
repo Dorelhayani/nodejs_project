@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>my SPA</title>
+    <style>
+
+        body{direction: ltr;}
+        td{border: 1px solid black;}
+        th{background-color: lightblue;}
+        tbody tr:nth-child(even) {background-color: lightgray;}
+        tr:hover{background-color: lightgreen;}
+    </style>
 </head>
 <body>
-
 <div id="add_form">
-    <input type="text" id="name" placeholder="name">
-    <input type="text" id="phone" placeholder="phone">
-    <input type="text" id="pobox" placeholder="pobox">
-    <button onclick= "add_new_line()"> Send </button>
+    <input type="text" name="name"  id="name"  placeholder="name" />
+    <input type="text" name="phone" id="phone" placeholder="phone" />
+    <input type="text" name="pob" id="pob" placeholder="pob" />
+    <button onclick="addNewLine()">send</button>
 </div>
+<br/>
+<input type="search" id="filterField" oninput="CreateTble();">
+<hr/>
+<button onclick="getList()">fetch</button>
+<hr/>
+<button onclick="DeleteLine()">delete</button>
 <table>
     <thead>
     <tr>
@@ -20,9 +32,80 @@
         <th>Pobox</th>
     </tr>
     </thead>
-
+    <tbody id="mainTable">  </tbody>
 </table>
 
-<script src="table_create.js"></script>
+<script>
+    let raw_data=[];
+    let srchTerm="";
+
+    // בניית טבלה
+    function FilterData(el){
+        console.log("FilterData::",el);
+        if(srchTerm === "")
+            return true;
+        let reg=new RegExp(srchTerm,"i");
+        return reg.test(el.name);
+
+    }
+
+// פונקציה ליצור הטבלה
+    function CreateTble(){
+        srchTerm=document.getElementById("filterField").value;
+        let data=raw_data.filter(FilterData);
+        let str="";
+        for(let line of data){
+            str+="<tr>";
+            str+="<td>"+line.name+"</td>";
+            str+=`<td>${line.phone}</td>`;
+            str+=`<td>${line.pob}</td>`;
+            str+=`<td><button onclick="DeleteLine(${line.idxOnServer});">delete</button></td>`;
+            str+="</tr>";
+        }
+        document.getElementById("mainTable").innerHTML=str;
+    }
+
+// קבל רשימה
+    async function getList() {
+        let response = await fetch('/List');
+        let data = await response.json();
+        console.log("data =",data);
+        raw_data = data;
+        CreateTble();
+    }
+
+// פונקציה להוספת שורה
+    async function addNewLine() {
+        let name=document.getElementById("name").value;
+        let phone=document.getElementById("phone").value;
+        let pob = document.getElementById("pob").value;
+        let response = await fetch('/Add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name: name, phone: phone, pob: pob})
+            }
+        );
+        getList();
+    }
+
+// פונקציה למחיקת שורה מהטבלה
+    async function DeleteLine(id) {
+        let objToServer={};
+        objToServer.idx=id;
+        let response = await fetch('/Delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(objToServer)
+            }
+        );
+        getList();
+    }
+
+    getList();
+</script>
 </body>
 </html>
